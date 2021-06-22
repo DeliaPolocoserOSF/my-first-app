@@ -13,35 +13,35 @@
   color: #c788b1;
 }
 
-.center {
-  display: block;
-  font-size: 27px;
-  color: #626839;
-  text-align: center;
-  margin: auto;
-  width: 100px;
-  height: 50px;
-  background-color: #dfc4d5;
-  margin-top: 30px;
+.buttonCenter {
+  display: block !important;
+  margin: auto !important;
+  background: #dfc4d5 !important;
+  color: #626839 !important;
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
+  font-size: 20px !important;
+  text-align: center !important;
+  height: 40px !important;
 }
 
-.fullWidth {
-  width: 100%;
+.buttonCenter::selection {
+  color: #626839 !important;
+  background: #f1c4e1 !important;
 }
 
-.customButton {
-  display: block;
-  margin: auto;
-  text-align: center;
+.buttonCenter:hover {
+  background-color: #f1c4e1 !important;
+  color: #626839 !important;
+  border: #f1c4e1 !important;
 }
 
 .tableDesign {
-  width: 100%;
+  width: 70%;
   text-align: center;
+  border: 1px solid black;
+  margin-left: 15%;
 }
-
 .dateWith {
   width: 620px;
 }

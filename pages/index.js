@@ -2,19 +2,34 @@ import React, { useState } from "react";
 import styles2 from "../styles/Home.module.css";
 import "../node_modules/antd/dist/antd.css";
 
-import { Form, Input, Button, Select, DatePicker } from "antd";
+import { Form, Input, Button, Select, DatePicker, Row, Col, Table } from "antd";
 
 export default function Home() {
-  const componentSize = useState("default");
-  const playList = [];
+
+  var playList = [];
+  const columns = [
+    { id: 1, title: "Title" },
+    { id: 2, title: "Author" },
+    { id: 3, title: "Type" },
+    { id: 4, title: "Release Date" },
+  ];
+  var id = 0;
 
   const registerUser = object => {
+
+    if (!object.release) {
+      alert("Date not provided");
+      return;
+    }
+
     playList.push({
+      id: id++,
       title: object.title,
       author: object.author,
       type: object.type,
       date: object.release.toDate()
     });
+    console.log(playList);
 
     var table = "";
     playList.forEach(element => {
@@ -24,78 +39,63 @@ export default function Home() {
       table += "<td>" + element.type + "</td>";
       table += "<td>" + element.date + "</td>";
       table += "</tr>";
-    });
 
-    document.getElementsByClassName("table")[0].innerHTML = table;
-
-    console.log(document.getElementsByClassName("tr"));
+      document.getElementsByClassName("table")[0].innerHTML = table;
+    })
   }
-
-  const columns = [
-    { id: 1, title: "Title" },
-    { id: 2, title: "Author" },
-    { id: 3, title: "Type" },
-    { id: 4, title: "Release Date" },
-  ];
-
-
   return (
     <>
-      <div className={`${styles2.imageBackground}`}>
-        <p className={`${styles2.title}`}>Add Music in Playlist</p>
-        <Form
-          labelCol={{
-            span: 4,
-          }}
-          wrapperCol={{
-            span: 14,
-          }}
-          initialValues={{
-            size: componentSize,
-          }}
-          onFinish={registerUser}
-        >
-          <Form.Item label="Title" className={`${styles2.textColor}`} name="title">
-            <Input />
-          </Form.Item>
-          <Form.Item label="Author" name="author">
-            <Input />
-          </Form.Item>
-          <Form.Item label="Type" name="type">
-            <Select >
-              <Select.Option value="Country">Country</Select.Option>
-              <Select.Option value="Jazz">Jazz</Select.Option>
-              <Select.Option value="Electronic">Electronic</Select.Option>
-              <Select.Option value="Pop">Pop</Select.Option>
-            </Select>
-          </Form.Item>
-          <Form.Item label="Release Date" name="release">
-            <DatePicker />
-          </Form.Item>
-
-          <div className={`${styles2.fullWidth}`}>
+      <p className={`${styles2.title}`}>Add Music in Playlist</p>
+      <Row >
+        <Col span={12} offset={6}>
+          <Form
+            onFinish={registerUser}
+          >
+            <Form.Item label="Title" className={`${styles2.textColor}`} name="title">
+              <Input />
+            </Form.Item>
+            <Form.Item label="Author" name="author">
+              <Input />
+            </Form.Item>
+            <Form.Item label="Type" name="type">
+              <Select >
+                <Select.Option value="Country">Country</Select.Option>
+                <Select.Option value="Jazz">Jazz</Select.Option>
+                <Select.Option value="Electronic">Electronic</Select.Option>
+                <Select.Option value="Pop">Pop</Select.Option>
+              </Select>
+            </Form.Item>
+            <Form.Item label="Release Date" name="release">
+              <DatePicker />
+            </Form.Item>
             <Form.Item>
-              <Button type="primary" className={`${styles2.customButton}`} htmlType="submit">
+              <Button className={`${styles2.buttonCenter}`} htmlType="submit" >
                 Submit
               </Button>
             </Form.Item>
-          </div>
+          </Form>
+        </Col>
+      </Row>
 
-        </Form>
-        <table className={styles2.tableDesign}>
-          <thead>
-            <tr>
-              {columns.map((col) => (
-                <th key={col.id}>{col.title}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="table">
-          </tbody>
-        </table>
-
-      </div>
+      <table className={styles2.tableDesign}>
+        <thead>
+          <tr>
+            {columns.map((col) => (
+              <th key={col.id}>{col.title}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody className="table" style={{ color: "red", width: "50%" }}>
+        </tbody>
+      </table>
     </>
   );
-
 }
+
+      // <Row>
+      //   <Col span={12} offset={6}>
+      //     <Table columns={columns}
+      //       dataSource={playList}>
+      //     </Table>
+      //   </Col>
+      // </Row>
