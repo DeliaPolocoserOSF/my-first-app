@@ -76,7 +76,11 @@ export default function Home() {
           </Form>
         </Col>
       </Row>
-
+      <Row>
+        <Col span={12} offset={6}>
+          <a href="https://www.youtube.com/" target="_blank" className={`${styles2.link}`}>Search on Youtube</a>
+        </Col>
+      </Row>
       <table className={styles2.tableDesign}>
         <thead>
           <tr>
@@ -85,7 +89,7 @@ export default function Home() {
             ))}
           </tr>
         </thead>
-        <tbody className="table" style={{ color: "red", width: "50%" }}>
+        <tbody className="table">
         </tbody>
       </table>
     </>
