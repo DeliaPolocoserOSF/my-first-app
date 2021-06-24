@@ -8,7 +8,6 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-
 .textColor {
   color: #c788b1;
 }
@@ -37,11 +36,7 @@
 }
 
 .tableDesign {
-  width: 70%;
-  text-align: center;
-  border: 1px solid black;
-  margin-left: 15%;
-  margin-top: 15px;
+  text-align: center !important;
 }
 .dateWith {
   width: 620px;

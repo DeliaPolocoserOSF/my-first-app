@@ -2,17 +2,11 @@ import React, { useState } from "react";
 import styles2 from "../styles/Home.module.css";
 import "../node_modules/antd/dist/antd.css";
 
-import { Form, Input, Button, Select, DatePicker, Row, Col, Table } from "antd";
+import { Form, Input, Button, Select, DatePicker, Row, Col, Menu } from "antd";
 
 export default function Home() {
 
   var playList = [];
-  const columns = [
-    { id: 1, title: "Title" },
-    { id: 2, title: "Author" },
-    { id: 3, title: "Type" },
-    { id: 4, title: "Release Date" },
-  ];
   var id = 0;
 
   const registerUser = object => {
@@ -22,36 +16,56 @@ export default function Home() {
       return;
     }
 
-    playList.push({
-      id: id++,
-      title: object.title,
+    var nextID = id++;
+
+    playList = [{
+      key: nextID.toString(),
+      song: object.song,
       author: object.author,
       type: object.type,
       date: object.release.toDate()
-    });
-    console.log(playList);
+    }];
 
-    var table = "";
-    playList.forEach(element => {
-      table += "<tr>";
-      table += "<td>" + element.title + "</td>";
-      table += "<td>" + element.author + "</td>";
-      table += "<td>" + element.type + "</td>";
-      table += "<td>" + element.date + "</td>";
-      table += "</tr>";
+    var playlistDB = sessionStorage.getItem('playlist');
 
-      document.getElementsByClassName("table")[0].innerHTML = table;
-    })
+    if (playlistDB) {
+      var x = JSON.parse(playlistDB);
+      var y = [];
+      for (let asd = 0; asd < x.length; asd++) {
+        y.push(x[asd]);
+      }
+      y.push(playList[0]);
+      sessionStorage.setItem('playlist', JSON.stringify(y));
+    } else {
+      sessionStorage.setItem('playlist', JSON.stringify(playList));
+    }
+
+
   }
   return (
     <>
+      <Menu theme="white" mode="horizontal" defaultSelectedKeys={['1']}>
+        {new Array(3).fill(null).map((_, index) => {
+          const key = index + 1;
+          if (key == 1) {
+            return <Menu.Item key={key}><a href="../">{`Home`}</a></Menu.Item>;
+          }
+          else if (key == 2) {
+            return <Menu.Item key={key}><a href="../playList">{`PlayList`}</a></Menu.Item>;
+          }
+          else {
+            return <Menu.Item key={key}>{`Empty`}</Menu.Item>;
+          }
+
+        })}
+      </Menu>
       <p className={`${styles2.title}`}>Add Music in Playlist</p>
       <Row >
         <Col span={12} offset={6}>
           <Form
             onFinish={registerUser}
           >
-            <Form.Item label="Title" className={`${styles2.textColor}`} name="title">
+            <Form.Item label="Title" className={`${styles2.textColor}`} name="song">
               <Input />
             </Form.Item>
             <Form.Item label="Author" name="author">
@@ -81,25 +95,6 @@ export default function Home() {
           <a href="https://www.youtube.com/" target="_blank" className={`${styles2.link}`}>Search on Youtube</a>
         </Col>
       </Row>
-      <table className={styles2.tableDesign}>
-        <thead>
-          <tr>
-            {columns.map((col) => (
-              <th key={col.id}>{col.title}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody className="table">
-        </tbody>
-      </table>
     </>
   );
 }
-
-      // <Row>
-      //   <Col span={12} offset={6}>
-      //     <Table columns={columns}
-      //       dataSource={playList}>
-      //     </Table>
-      //   </Col>
-      // </Row>
